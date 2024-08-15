@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    
+</head>
+<body>
+    
+        <header class="container-fluid">
+            <nav class="navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="#">Agri Dashboard</a>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#dashboard">Dashboard <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#soil">Soil Conditions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#weather">Weather</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#monitoring">Monitoring</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#analytics">Analytics</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#market">Market Trends</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+    
+            <div class="container">
+                <section id="dashboard" class="section-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2>Dashboard Overview</h2>
+                            <div class="row">
+                                <div class="col-md-3 dashboard-card">
+                                    <h3>Yield</h3>
+                                    <p id="dashboard-yield">100 tons (projected)</p>
+                                </div>
+                                <div class="col-md-3 dashboard-card">
+                                    <h3>Crop Health</h3>
+                                    <p id="dashboard-health">Excellent</p>
+                                </div>
+                                <div class="col-md-3 dashboard-card">
+                                    <h3>Soil Moisture</h3>
+                                    <p id="dashboard-moisture">60%</p>
+                                </div>
+                                <div class="col-md-3 dashboard-card">
+                                    <h3>Temperature</h3>
+                                    <p id="dashboard-temp">{{ weather.current.temp }}°C</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section id="soil" class="section-content">
+                    <h2>Soil Conditions</h2>
+                        <h3>Today's Soil Conditions</h3>
+                            <p id="overall-health" class="health-status">Overall {{ today_health }}</p>
+                        <ul>
+                            <li>Soil Moisture: <span class="health-status">{{ today_categories.soil_moisture }}</span></li>
+                            <li>Soil Temperature: <span class="health-status">{{ today_categories.soil_temperature }}</span></li>
+                            <li>Nitrogen Content: <span class="health-status">{{ today_categories.nitrogen_content }}</span></li>
+                            <li>Phosphorus Content: <span class="health-status">{{ today_categories.phosphorus_content }}</span></li>
+                            <li>Potassium Content: <span class="health-status">{{ today_categories.potassium_content }}</span></li>
+                            <li>Soil pH: <span class="health-status">{{ today_categories.soil_ph }}</span></li>
+                        </ul>
+                    </div>
+                </section>
+                <section id="weather" class="section-content">
+                    <h2>Weather Conditions</h2>
+                    <div class="row">
+                        <div class="col-md-3 weather-card">
+                            <h3>Current Temperature</h3>
+                            <p>Temperature: {{ weather.current.temp }} °C (Feels like: {{ weather.current.feels_like }} °C)</p>
+                        </div>
+                        <div class="col-md-3 weather-card">
+                            <h3>Humidity</h3>
+                            <p>Humidity: {{ weather.current.humidity }}%</p>
+                        </div>
+                        <div class="col-md-3 weather-card">
+                            <h3>Wind Speed</h3>
+                            <p>{{ weather.current.wind_speed }} m/s</p>
+                        </div>
+                        <div class="col-md-3 weather-card">
+                            <h3>Forecast</h3>
+                            <p>{{ weather.current.weather.0.description }}</p>
+                        </div>
+                    </div>
+                </section>
+                <section id="monitoring" class="section-content">
+                    <h2>Soil Health Monitoring</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Overall Soil Health</h3>
+                            <table id="soil-data" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Moisture</th>
+                                        <th>Temperature</th>
+                                        <th>Nitrogen</th>
+                                        <th>Phosphorus</th>
+                                        <th>Potassium</th>
+                                        <th>pH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for record in numerical_data %}
+                                    <tr>
+                                        <td>{{ record.date }}</td>
+                                        <td>{{ record.soil_moisture }}%</td>
+                                        <td>{{ record.soil_temperature }}°C</td>
+                                        <td>{{ record.nitrogen_content }} ppm</td>
+                                        <td>{{ record.phosphorus_content }} ppm</td>
+                                        <td>{{ record.potassium_content }} ppm</td>
+                                        <td>{{ record.soil_ph }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                       
+                    </div>
+                    
+                </section>
+                <section id="analytics" class="section-content">
+                    <h2>Analytics and Reports</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Soil Condition Trends</h3>
+                            <img src="data:image/png;base64,{{ soil_health_plot }}" alt="Soil Health Parameters Plot"width= "800px">
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Temperature Trends</h3>
+                            <img src="data:image/png;base64,{{ temperature_plot }}" alt="temperature history  Plot" width= "800px">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Yield trends</h3>
+                            
+                        </div>
+                
+                    </div>
+                </section>
+                
+                <section id="market" class="section-content">
+                    <h2>Market Trends</h2>
+                    <p>Minimum Price(per quintal): {{ price.min_price }} &#8377;</p>
+                    <p>Maximum Price(per quintal): {{ price.max_price }} &#8377;</p>
+                    <img src="data:image/png;base64,{{ price.plot }}" alt="Price Plot" height="800px">
+                </section>
+                <section  class="sections">
+                    <a href="mailto:ay3898097@gmail.com" class= "click"> Created By :- Anurag</a>
+                </section>
+            </div> 
+        </header>
+    </body>
+    </html>
+    
