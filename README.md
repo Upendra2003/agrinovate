@@ -12,6 +12,8 @@ AgriInnovate is a Django-based project aimed at providing comprehensive agricult
 
 ## Installation
 
+link to Iot device(virtual):- https://wokwi.com/projects/406218366821925889
+
 To set up and run this project locally, follow these steps:
 
 1. **Clone the Repository:**
