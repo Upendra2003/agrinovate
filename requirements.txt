@@ -22,7 +22,7 @@ et-xmlfile==1.1.0
 executing==2.0.1
 filelock==3.15.4
 fonttools==4.53.0
-GDAL @ file:///C:/GDAL-3.8.4-cp312-cp312-win_amd64.whl#sha256=841c9569814fb5167e5b5652cf244f20a91051d1d6dd1ee97e72a0a9c0631d8c
+# GDAL @ file:///C:/GDAL-3.8.4-cp312-cp312-win_amd64.whl#sha256=841c9569814fb5167e5b5652cf244f20a91051d1d6dd1ee97e72a0a9c0631d8c
 h11==0.14.0
 idna==3.7
 ipykernel==6.29.5
