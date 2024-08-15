@@ -63,7 +63,7 @@ PyQt5_sip==12.15.0
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
 pytz==2024.1
-pywin32==305
+#pywin32==305
 pyzmq==26.0.3
 requests==2.32.3
 scikit-learn==1.5.1
